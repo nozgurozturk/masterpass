@@ -1,0 +1,6 @@
+{
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "typescript.format.insertSpaceBeforeFunctionParenthesis": true,
+  "typescript.format.semicolons": "remove"
+}

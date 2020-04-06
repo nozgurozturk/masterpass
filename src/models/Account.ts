@@ -11,3 +11,12 @@ export interface IAccount {
   userId?: string
   accountStatus?: AccountStatus
 }
+
+export class Account {
+  public userId: string
+  public accountStatus: AccountStatus
+  constructor (userId: string, accountStatus: AccountStatus) {
+    this.userId = userId
+    this.accountStatus = accountStatus
+  }
+}
