@@ -18,9 +18,13 @@ export interface IFault {
   Detail: IDetail
 }
 
+interface IListItems {
+  ListItem?: any[]
+}
+
 interface ITransactionBody {
   url3D?: string | null
-  ListItem?: any[]
+  ListItems?: IListItems
   AccountStatus?: string | null
   RefNo: string | null
 }

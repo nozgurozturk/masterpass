@@ -1,18 +1,18 @@
 /* eslint-disable prefer-const */
-import { IAccount, AccountStatus } from '../models/Account'
-import { IMasterPass } from '../models/MasterPass'
+import { Account, AccountStatus } from '../models/Account'
+import { MasterPass } from '../models/MasterPass'
 import { Card } from '../models/Card'
 
 export namespace Context {
   export const Env:string = 'prod'
   export const baseUrl = Env === 'dev' ? 'https://test.masterpassturkiye.com/MasterpassJsonServerHandler/v2' : 'https://ui.masterpassturkiye.com/v2'
 
-  export let Account: IAccount = {
+  export let Account: Account = {
     userId: '',
     accountStatus: AccountStatus.NoAccount
   }
 
-  export let MasterPass: IMasterPass = {
+  export let MasterPass: MasterPass = {
     address: '',
     clientId: '',
     forceMasterPass3d: false,
@@ -25,11 +25,15 @@ export namespace Context {
   export let Cards: Card[] = []
 }
 
-export function setAccount (newAccount: IAccount) {
+export function setCards (cards: Card[]) {
+  Context.Cards = cards
+}
+
+export function setAccount (newAccount: Account) {
   Context.Account = newAccount
 }
 
-export function setMasterPassContext (mp:IMasterPass) {
+export function setMasterPassContext (mp:MasterPass) {
   Context.MasterPass = mp
 }
 

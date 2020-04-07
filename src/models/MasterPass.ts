@@ -17,13 +17,15 @@ export class MasterPass {
   public token: string
   public responseToken?: string
   constructor (
-    address: string,
-    clientId: string,
-    forceMasterPass3d: boolean,
-    isOtpMsisdn: boolean,
-    msisdn: string,
-    token: string,
-    responseToken?: string) {
+    {
+      address,
+      clientId,
+      forceMasterPass3d,
+      isOtpMsisdn,
+      msisdn,
+      token,
+      responseToken
+    }:IMasterPass) {
     this.address = address
     this.clientId = clientId
     this.forceMasterPass3d = forceMasterPass3d

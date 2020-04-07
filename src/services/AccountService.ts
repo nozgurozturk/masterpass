@@ -3,10 +3,12 @@ import { Context } from '../contex/index'
 
 export class AccountService {
   public account: Account
+  public userId: string
+  public accountStatus: AccountStatus
   private onAccountChange: Function
   constructor () {
-    const account: IAccount = Context.Account
-    this.account = new Account(account.userId, account.accountStatus)
+    const account: Account = Context.Account
+    this.account = account
   }
 
   bindAccountChanged (callback: Function) {
@@ -17,8 +19,8 @@ export class AccountService {
     this.onAccountChange(account)
   }
 
-  public add (account: Account) {
-    const newAccount = new Account(account.userId, account.accountStatus)
+  public add ({ userId, accountStatus }: IAccount) {
+    const newAccount = new Account({ userId, accountStatus })
     this.commit(newAccount)
   }
 
@@ -30,33 +32,24 @@ export class AccountService {
     return digits.reduce((sum: number, digit: number, index: number) => Number(sum) + Number(digit) * Math.pow(2, index))
   }
 
-  public setAccountStatus = (accountStatus: string): void => {
+  public setAccountStatus = (accountStatus: string): AccountStatus => {
     const digits = this.convertStringsToDigits(accountStatus)
     const status = this.identifyAccountStatus(digits)
-    let accStatus
     switch (status) {
       case digits[0] = 0:
-        accStatus = AccountStatus.NoAccount
-        break
+        return AccountStatus.NoAccount
       case digits[4] = 1:
-        accStatus = AccountStatus.BlockedAccount
-        break
+        return AccountStatus.BlockedAccount
       case 66 || 67:
-        accStatus = AccountStatus.RegisteredAccount
-        break
+        return AccountStatus.RegisteredAccount
       case 10 || 11:
-        accStatus = AccountStatus.LinkedWithoutCard
-        break
+        return AccountStatus.LinkedWithoutCard
       case 70 || 71:
-        accStatus = AccountStatus.AccountWithCard
-        break
+        return AccountStatus.AccountWithCard
       case 78 || 79:
-        accStatus = AccountStatus.LinkedWithCard
-        break
+        return AccountStatus.LinkedWithCard
       default:
-        accStatus = AccountStatus.NoAccount
-        break
+        return AccountStatus.NoAccount
     }
-    this.commit(new Account(Context.Account.userId, accStatus))
   }
 }

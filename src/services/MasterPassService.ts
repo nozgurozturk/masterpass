@@ -4,26 +4,26 @@ import { IMasterPass, MasterPass } from '../models/MasterPass'
 export class MasterPassService {
   public masterPass: MasterPass
   private onMasterPassChange: Function
-  private onResponseTokenChanged: Function
+  private onResponseTokenChange: Function
   constructor () {
-    const mp: IMasterPass = Context.MasterPass
-    this.masterPass = new MasterPass(mp.address, mp.clientId, mp.forceMasterPass3d, mp.isOtpMsisdn, mp.msisdn, mp.token)
-  }
-
-  public bindResponseTokenChanged (callback: Function) {
-    this.onMasterPassChange = callback
-  }
-
-  public bindMasterPassChanged (callback: Function) {
-    this.onMasterPassChange = callback
+    const masterpass = Context.MasterPass
+    this.masterPass = masterpass
   }
 
   private commit (mp: MasterPass) {
     this.onMasterPassChange(mp)
   }
 
-  public add (mp: MasterPass) {
-    const newMasterPass = new MasterPass(mp.address, mp.clientId, mp.forceMasterPass3d, mp.isOtpMsisdn, mp.msisdn, mp.token)
+  public bindResponseTokenChanged (callback: Function) {
+    this.onResponseTokenChange = callback
+  }
+
+  public bindMasterPassChanged (callback: Function) {
+    this.onMasterPassChange = callback
+  }
+
+  public add (masterpass: IMasterPass) {
+    const newMasterPass = new MasterPass(masterpass)
     this.commit(newMasterPass)
   }
 }

@@ -15,7 +15,7 @@ export interface IAccount {
 export class Account {
   public userId: string
   public accountStatus: AccountStatus
-  constructor (userId: string, accountStatus: AccountStatus) {
+  constructor ({ userId, accountStatus }:IAccount) {
     this.userId = userId
     this.accountStatus = accountStatus
   }

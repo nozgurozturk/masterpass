@@ -1,0 +1,22 @@
+POST /v2/register HTTP/1.1
+Accept: */*
+Content-Type: application/x-www-form-urlencoded
+Origin: https://www.ipekyol.com.tr
+Content-Length: 1719
+Accept-Language: en-us
+Host: ui.masterpassturkiye.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1 Safari/605.1.15
+Referer: https://www.ipekyol.com.tr/
+Accept-Encoding: br, gzip, deflate
+Connection: keep-alive
+
+Access-Control-Allow-Methods: POST
+Content-Type: application/json
+Date: Tue, 07 Apr 2020 14:31:36 GMT
+Access-Control-Allow-Headers: Accept, Origin, Content-type
+Content-Length: 689
+Access-Control-Allow-Origin: *
+Strict-Transport-Security: max-age=157680000
+
+MIME Type: application/x-www-form-urlencoded
+{"token":"1B51EF5558DCCAB1A116EDF5BDCB35BD70C1D000A521D9581FF5A20424422FD50169BFE9E4565A70360531A68063C315222B71930C095BF8319DF651F55F689C5CF4BC1EFA75787D622EFB3FC97BA5BC845FF45324AE6954D8931A7F5E5A73FADF11EE0FFFECFB964C3287B18DA4E15AC0954B62F6EA787EB18A36813987995FA7B71E8CB2B9F946A1E5109A10D96E08608EE754","cardHolderName":"Garanti Bankası","email":null,"lastName":null,"firstName":null,"homePostalCode":null,"homeCountryCode":null,"homeState":null,"homeCity":null,"homeAddress":null,"cvc":"3e759cc280e2fa1979f70acbbc8afb0fe2c504e1857da13073b61b4dd635d13b5766fcbabb8b48cf88a3767835d34b6683b2b5c14244671d7eb50cde377fe8b4b66cc6148ba43a38aa3c0e8c9ba3fa601d4003911362d39555b10a9cc80bb5e4365f0f869276c3a5c90a024c96988d7b0ff64ccf39d9a7410c56bb9f064b6bb88fed524c1d90d03fa20e6108c40d7b3929600c631f7e098dad129dc944b14a26f397949053ad7b3d9a5ff6e5d6b9b928","accountAliasName":"Garanti Bankası","expiryDate":"2809","rtaPan":"aaf9dd5aef79bcd1a64b17c473602075aef262a3df3f82bc8886145e0388735de6d4d083e211b1799ec25dc7d7a02cf53d9804c6d7fe982c345f603624fa1064c959171c7a7cd9f661ffd1fd8a9ac0b6942dfdb137fb2a2e60edaa749a7861f4ee247531c79a32500c586ba4c79b697c40a75563149cc0dc27b555b41c56b9470ac667a25f38e5ab6d547b269aeefd5d60e32e85880a1bb9253d0596c9893f4c689ce337a39f3c59004bc9bd4667f43f","uiChannelType":"6","timeZone":"03","sendSmsLanguage":"tur","sendSms":"Y","referenceNo":"0000000","msisdn":"905385657551","mobileAccountConfig":"WMA","identityVerificationFlag":"Y","mmrpConfig":"110010","defaultAccount":"Y","cpinFlag":"Y","cardTypeFlag":"05","eActionType":"A","delinkReason":"","clientIp":"10.129.4.23","actionType":"A","fp":"","clientId":"34704570","dateTime":"2020-04-07T14:31:39.151Z","version":"34","clientType":"1"}

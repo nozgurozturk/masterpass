@@ -6,8 +6,8 @@ export class CardService {
   private onCardListChanged: Function;
 
   constructor () {
-    const cards: ICard[] = Context.Cards
-    this.cards = cards.map(card => new Card(card))
+    const cards: Card[] = []
+    this.cards = cards.map((card:ICard) => new Card(card))
   }
 
   public bindCardListChanged (callback: Function) {
@@ -16,15 +16,14 @@ export class CardService {
 
   private commit (cards: Card[]) {
     this.onCardListChanged(cards)
-    Context.Cards = cards
   }
 
-  public add (card: Card) {
+  public add (card: ICard) {
     this.cards.push(new Card(card))
     this.commit(this.cards)
   }
 
-  public edit (UniqueId: string, cardToEdit: Card) {
+  public edit (UniqueId: string, cardToEdit: ICard) {
     this.cards = this.cards.map(card =>
       card.UniqueId === UniqueId
         ? new Card({
