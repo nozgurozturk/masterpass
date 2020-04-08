@@ -12,7 +12,7 @@ export namespace Context {
     accountStatus: AccountStatus.NoAccount
   }
 
-  export let MasterPass: MasterPass = {
+  export let MasterPass: MasterPass._Model = {
     address: '',
     clientId: '',
     forceMasterPass3d: false,
@@ -33,7 +33,7 @@ export function setAccount (newAccount: Account) {
   Context.Account = newAccount
 }
 
-export function setMasterPassContext (mp:MasterPass) {
+export function setMasterPassContext (mp:MasterPass._Model) {
   Context.MasterPass = mp
 }
 

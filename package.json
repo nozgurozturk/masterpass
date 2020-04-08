@@ -4,7 +4,8 @@
   "description": "MasterPass Client Merchant Implementation",
   "main": "index.js",
   "scripts": {
-    "b": "tsc",
+    "convert": "tsc",
+    "docs": "typedoc --out docs ./src",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode production",
     "start": "webpack-dev-server --mode development --open"
@@ -13,7 +14,7 @@
     "type": "git",
     "url": "git+https://github.com/nozgurozturk/masterpass.git"
   },
-  "keywords": [],
+  "keywords": ["masterpass"],
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -21,7 +22,6 @@
   },
   "homepage": "https://github.com/nozgurozturk/masterpass#readme",
   "devDependencies": {
-    "@types/jquery": "^3.3.34",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.26.0",
     "eslint": "^6.8.0",
@@ -31,12 +31,11 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "ts-loader": "^6.2.2",
+    "typedoc": "^0.17.4",
     "typescript": "^3.8.3",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"
   },
-  "dependencies": {
-    "jquery": "^3.4.1"
-  }
+  "dependencies": {}
 }

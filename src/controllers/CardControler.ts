@@ -1,11 +1,12 @@
 import { CardService } from '../services/CardService'
 import { Card, ICard } from '../models/Card'
-import { IListCard } from '../instances/ListCard'
+import { IListCard } from '../requests/ListCard'
 import { Context, setCards } from '../contex/index'
-import { IMasterPassResonse } from '../models/MasterPassResponse'
-import { IRegisterCard, IRegisterCardDefault } from '../instances/RegisterCard'
+import { MasterPass } from '../models/MasterPass'
+import { IRegisterCard, IRegisterCardDefault } from '../requests/RegisterCard'
 import MasterPassController from './MasterPassController'
-import { IDeleteCard } from '../instances/DeleteCard'
+import { IDeleteCard } from '../requests/DeleteCard'
+import { RSA } from '../helpers/RSA'
 
 class CardController {
   private CardService : CardService
@@ -49,9 +50,8 @@ class CardController {
         method: 'POST',
         body: JSON.stringify(listCardInstance)
       })
-      const response: IMasterPassResonse = await listCardResponse.json()
-      return new Promise((resolve, reject) => {
-        console.log(response)
+      const response: MasterPass.Response = await listCardResponse.json()
+      return new Promise<MasterPass.IResponse | MasterPass.IFault>((resolve, reject) => {
         if (response.Data.Body.Fault.Detail.ServiceFaultDetail.ResponseCode === '0000' ||
         response.Data.Body.Fault.Detail.ServiceFaultDetail.ResponseCode === '') {
           this.onCardListChanged(response.Data.Body.Response.Result.TransactionBody.ListItems.ListItem)
@@ -98,19 +98,23 @@ class CardController {
       version: '35',
       clientType: '1'
     }
+    registerCardInstance = {
+      ...registerCardInstance, cvc: RSA.encrypt(registerCardInstance.cvc), rtaPan: RSA.encrypt(registerCardInstance.rtaPan)
+    }
     const addCardInstance = { ...initialInstances, ...registerCardInstance }
-    console.log(JSON.stringify(addCardInstance))
     try {
-      const addCardResponse : any = await fetch('https://ui.masterpassturkiye.com/v2/register', {
+      const addCardResponse : any = await fetch(`${Context.MasterPass.address}/register`, {
         method: 'POST',
         body: JSON.stringify(addCardInstance)
       })
-      const response : IMasterPassResonse = await addCardResponse.json()
-      return new Promise((resolve, reject) => {
+      const response : MasterPass.Response = await addCardResponse.json()
+      return new Promise<MasterPass.IResponse | MasterPass.IFault>((resolve, reject) => {
         console.log(response)
         if (response.Data.Body.Fault.Detail.ServiceFaultDetail.ResponseCode === '0000' ||
         response.Data.Body.Fault.Detail.ServiceFaultDetail.ResponseCode === '') {
-          // this.handleAddCard(response.Data.Body.Response.Result.TransactionBody.ListItems.ListItem)
+          response.Data.Body.Response.Result.TransactionBody.ListItems.ListItem.forEach(item => {
+            this.handleAddCard(item)
+          })
           resolve(response.Data.Body.Response)
         } else {
           MasterPassController.onResponseTokenChanged(response.Data.Body.Fault.Detail.ServiceFaultDetail.Token)
@@ -148,15 +152,15 @@ class CardController {
       clientType: '1'
     }
     try {
-      const deleteCardResponse : any = await fetch('https://ui.masterpassturkiye.com/v2/deleteCard', {
+      const deleteCardResponse : any = await fetch(`${Context.MasterPass.address}/deleteCard`, {
         method: 'POST',
         body: JSON.stringify({ ...deleteCardInstance, accountAliasName })
       })
-      const response : IMasterPassResonse = await deleteCardResponse.json()
-      return new Promise((resolve, reject) => {
-        console.log(response)
+      const response : MasterPass.Response = await deleteCardResponse.json()
+      return new Promise<MasterPass.IResponse | MasterPass.IFault>((resolve, reject) => {
         if (response.Data.Body.Fault.Detail.ServiceFaultDetail.ResponseCode === '0000' ||
         response.Data.Body.Fault.Detail.ServiceFaultDetail.ResponseCode === '') {
+          this.handleDeleteCard(accountAliasName)
           resolve(response.Data.Body.Response)
         } else {
           reject(response.Data.Body.Fault)

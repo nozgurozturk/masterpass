@@ -1,2 +1,2 @@
-/dist/lib/*.js
+/dist/**
 /src/helpers/Encrypt.js

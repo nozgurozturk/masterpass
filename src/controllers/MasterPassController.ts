@@ -10,16 +10,16 @@ class MasterPassController {
     masterPassService.bindResponseTokenChanged(this.onMasterPassChanged)
   }
 
-  onResponseTokenChanged = (responseToken: string) => {
+  public onResponseTokenChanged = (responseToken: string) => {
     setResponseTokenContext(responseToken)
   }
 
-  onMasterPassChanged = (mp: MasterPass) => {
+  public onMasterPassChanged = (mp: MasterPass._Model) => {
     setMasterPassContext(mp)
   }
 
-  handleAddMasterPass= (mp: MasterPass) => {
-    this.masterPassService.add(mp)
+  public init = (masterpass: MasterPass._Model) => {
+    this.masterPassService.add(masterpass)
   }
 }
 

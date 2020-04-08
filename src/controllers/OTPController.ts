@@ -1,9 +1,8 @@
-import { IOTP } from '../instances/OTP'
-import { IMasterPassResonse } from '../models/MasterPassResponse'
+import { IOTP } from '../requests/OTP'
+import { MasterPass } from '../models/MasterPass'
 import { Context } from '../contex/index'
-import MasterPassController from './MasterPassController'
 
-export class OTPController {
+class OTPController {
   public static submit = async (validationCode: string) => {
     const OTPInstance: IOTP = {
       validationRefNo: Context.MasterPass.responseToken,
@@ -23,13 +22,12 @@ export class OTPController {
         method: 'POST',
         body: JSON.stringify(OTPInstance)
       })
-      const response: IMasterPassResonse = await otpResponse.json()
-      return new Promise((resolve, reject) => {
+      const response: MasterPass.Response = await otpResponse.json()
+      return new Promise<MasterPass.IResponse | MasterPass.IFault>((resolve, reject) => {
         if (response.Data.Body.Fault.Detail.ServiceFaultDetail.ResponseCode === '0000' ||
         response.Data.Body.Fault.Detail.ServiceFaultDetail.ResponseCode === '') {
           resolve(response.Data.Body.Response)
         } else {
-          // MasterPassController.onResponseTokenChanged(response.Data.Body.Fault.Detail.ServiceFaultDetail.Token)
           reject(response.Data.Body.Fault)
         }
       })
@@ -38,3 +36,5 @@ export class OTPController {
     }
   }
 }
+
+export default OTPController

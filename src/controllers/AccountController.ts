@@ -1,10 +1,10 @@
 import { AccountService } from '../services/AccountService'
 import { Account, AccountStatus } from '../models/Account'
 import { setAccount, Context } from '../contex/index'
-import { IMasterPassResonse } from '../models/MasterPassResponse'
-import { ICheckMasterPass } from '../instances/CheckMasterPass'
-import { ILinkCard } from '../instances/LinkCard'
+import { ICheckMasterPass } from '../requests/CheckMasterPass'
+import { ILinkCard } from '../requests/LinkCard'
 import MasterPassController from './MasterPassController'
+import { MasterPass } from '../models/MasterPass'
 
 class AccountController {
   private accountService: AccountService
@@ -13,15 +13,15 @@ class AccountController {
     accountService.bindAccountChanged(this.onAccountChanged)
   }
 
-  onAccountChanged = (account: Account) => {
+  private onAccountChanged = (account: Account) => {
     setAccount(account)
   }
 
-  handleAddAccount = (account: Account) => {
+  private handleAddAccount = (account: Account) => {
     this.accountService.add(account)
   }
 
-  handleStatus = (status:string):AccountStatus => {
+  private handleStatus = (status:string):AccountStatus => {
     return this.accountService.setAccountStatus(status)
   }
 
@@ -43,9 +43,9 @@ class AccountController {
         method: 'POST',
         body: JSON.stringify(checkMasterPassInstance)
       })
-      const response: IMasterPassResonse = await masterpassResponse.json()
+      const response: MasterPass.Response = await masterpassResponse.json()
 
-      return new Promise((resolve, reject) => {
+      return new Promise<MasterPass.IResponse | MasterPass.IFault>((resolve, reject) => {
         if (response.Data.Body.Fault.Detail.ServiceFaultDetail.ResponseCode === '0000' ||
             response.Data.Body.Fault.Detail.ServiceFaultDetail.ResponseCode === '') {
           const newAccount: Account = new Account({
@@ -81,8 +81,8 @@ class AccountController {
         method: 'POST',
         body: JSON.stringify(LinkCardInstance)
       })
-      const response: IMasterPassResonse = await linkCardResponse.json()
-      return new Promise((resolve, reject) => {
+      const response: MasterPass.Response = await linkCardResponse.json()
+      return new Promise<MasterPass.IResponse | MasterPass.IFault>((resolve, reject) => {
         if (response.Data.Body.Fault.Detail.ServiceFaultDetail.ResponseCode === '0000' ||
             response.Data.Body.Fault.Detail.ServiceFaultDetail.ResponseCode === '') {
           this.handleStatus(response.Data.Body.Response.Result.TransactionBody.AccountStatus)

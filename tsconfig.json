@@ -6,5 +6,10 @@
     "module": "es6",
     "target": "es5",
     "allowJs": true,
+  },
+  "typedocOptions": {
+    "mode": "modules",
+    "out": "docs",
+    "exclude": ["./dist", "./docs", "./node_modules", "./src/helpers/Encrypt.js"]
   }
 }

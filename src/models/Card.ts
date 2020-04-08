@@ -13,18 +13,6 @@ export interface ICard {
   EftCode: string
 }
 
-// "Name": "Maximum",
-// "PromtCpin": "N",
-// "Value1": "454360********40",
-// "Value2": "U01",
-// "IsMasterPassMember": "Y",
-// "CardStatus": "0000100101",
-// "BankIca": "3771",
-// "LoyaltyCode": "",
-// "ProductName": "İş Bankası Maximum Visa",
-// "UniqueId": "6509CF2E98010E2F9CA68F8E829DE2A3ABAEDD7F4BA2EE0536B261C3332084B3",
-// "EftCode": "0064"
-
 export class Card {
   public Name : string
   public Value1: string
