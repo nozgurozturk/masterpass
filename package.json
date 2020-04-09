@@ -1,10 +1,10 @@
 {
-  "name": "masterpass",
-  "version": "1.0.0",
+  "name": "@nozgurozturk/masterpass",
+  "version": "1.0.7",
   "description": "MasterPass Client Merchant Implementation",
-  "main": "index.js",
+  "main": "/lib/index.js",
   "scripts": {
-    "convert": "tsc",
+    "publish_package": "tsc && npm publish --access=public",
     "docs": "typedoc --out docs ./src",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode production",
@@ -15,7 +15,7 @@
     "url": "git+https://github.com/nozgurozturk/masterpass.git"
   },
   "keywords": ["masterpass"],
-  "author": "",
+  "author": "@nozgurozturk",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/nozgurozturk/masterpass/issues"

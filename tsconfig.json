@@ -1,15 +1,19 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
-    "sourceMap": true,
+    "outDir": "./lib/",
+    // "sourceMap": true,
     "noImplicitAny": true,
     "module": "es6",
     "target": "es5",
     "allowJs": true,
+    "declaration": true,
+    "lib": ["es2017", "es7", "es6", "dom"],
+    "esModuleInterop": true,
   },
+  "exclude": ["public", "docs", "node_modules", "src/examples", "webpack.config.js"],
   "typedocOptions": {
     "mode": "modules",
     "out": "docs",
-    "exclude": ["./dist", "./docs", "./node_modules", "./src/helpers/Encrypt.js"]
+    "exclude": ["lib", "public", "docs", "node_modules", "src/helpers/Encrypt.js", "src/examples"]
   }
 }

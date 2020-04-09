@@ -8,9 +8,9 @@ module.exports = (env, argv) => {
     module: {
       rules: [
         {
-          test: /\.tsx?$/,
+          test: /\.ts?$/,
           use: 'ts-loader',
-          exclude: /node_modules/
+          exclude: [/node_modules/]
         }
       ]
     },
@@ -18,11 +18,11 @@ module.exports = (env, argv) => {
       extensions: ['.tsx', '.ts', '.js']
     },
     output: {
-      path: path.resolve(__dirname, 'dist'),
+      path: path.resolve(__dirname, 'public'),
       filename: 'bundle.js'
     },
     devServer: {
-      contentBase: path.join(__dirname, 'dist'),
+      contentBase: path.join(__dirname, 'public'),
       compress: true,
       port: 8000
     }
