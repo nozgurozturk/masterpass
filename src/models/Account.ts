@@ -1,10 +1,11 @@
 export enum AccountStatus {
-  NoAccount, // 0 - X0XXXXX
-  BlockedAccount, // 1 - XXXX1XX
-  RegisteredAccount, // 2 - X100001
-  LinkedWithoutCard, // 3 - X101000
-  AccountWithCard, // 4 - X110001
-  LinkedWithCard, // 5 - X111001
+  NoAccount, // 0 - X0XXXX
+  BlockedAccount, // 1 - XXXX1X
+  AccountWithoutCard, // 2 - X10000
+  LinkedWithoutCard, // 3 - X10100
+  AccountWithCard, // 4 - X11000
+  LinkedWithCard, // 5 - X11100
+  LinkedWithCardUpdated, // 6 - X11101
 }
 
 export interface IAccount {
