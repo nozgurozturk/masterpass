@@ -67,7 +67,7 @@ export class AccountService {
    * @returns {Array<Number>}
    */
   private convertStringsToDigits = (accountStatus: string): number[] => {
-    return accountStatus.substring(0, 7).split('').map(string => Number(string))
+    return accountStatus.substring(0, 6).split('').map(string => Number(string))
   }
 
   /**
@@ -101,14 +101,16 @@ export class AccountService {
         return AccountStatus.NoAccount
       case digits[4] = 1:
         return AccountStatus.BlockedAccount
-      case 66 || 67:
-        return AccountStatus.RegisteredAccount
+      case 2 || 3:
+        return AccountStatus.AccountWithoutCard
       case 10 || 11:
         return AccountStatus.LinkedWithoutCard
-      case 70 || 71:
+      case 6 || 7:
         return AccountStatus.AccountWithCard
-      case 78 || 79:
+      case 14 || 15:
         return AccountStatus.LinkedWithCard
+      case 46 || 47:
+        return AccountStatus.LinkedWithCardUpdated
       default:
         return AccountStatus.NoAccount
     }

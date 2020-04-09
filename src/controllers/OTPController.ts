@@ -2,8 +2,19 @@ import { IOTP } from '../requests/OTP'
 import { MasterPass } from '../models/MasterPass'
 import { Context } from '../contex/index'
 
+/**
+ * @class OTPController
+ * @property {Function} submit
+ */
+
 class OTPController {
-  public static submit = async (validationCode: string) => {
+  /**
+   * Submit SMS validation code to Bank or MasterPass
+   * @method submit
+   * @param {string} validationCode
+   * @returns {Promise}
+   */
+  public static submit = async (validationCode: string):Promise<MasterPass.IResponse | MasterPass.IFault> => {
     const OTPInstance: IOTP = {
       validationRefNo: Context.MasterPass.responseToken,
       token: null,
@@ -32,7 +43,7 @@ class OTPController {
         }
       })
     } catch (error) {
-      return new Error(error.message)
+      return error.message
     }
   }
 }

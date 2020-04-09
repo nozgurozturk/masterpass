@@ -2,15 +2,15 @@ import { ICard } from './Card'
 
 export namespace MasterPass {
   export interface IServiceFaultDetail {
-    RefNo: string | null
-    ResponseCode: string | null
-    ResponseDesc: string | null
-    Token: string | null
-    NewMsisdn: string | null
-    InternalResponseCode: string | null
-    InternalResponseMessage: string | null
-    CardIssuerName?: string | null,
-    MaskedPan?: string | null
+    RefNo: string | null | undefined
+    ResponseCode: string | null | undefined
+    ResponseDesc: string | null | undefined
+    Token: string | null | undefined
+    NewMsisdn: string | null | undefined
+    InternalResponseCode: string | null | undefined
+    InternalResponseMessage: string | null | undefined
+    CardIssuerName?: string | null | undefined,
+    MaskedPan?: string | null | undefined
   }
 
   export interface IDetail {
@@ -26,15 +26,15 @@ export namespace MasterPass {
   }
 
   export interface ITransactionBody {
-    url3D?: string | null
+    url3D?: string | null | undefined
     ListItems?: IListItems
-    AccountStatus?: string | null
-    RefNo: string | null
+    AccountStatus?: string | null | undefined
+    RefNo: string | null | undefined
   }
 
   export interface ITransactionHeader {
-    RequestDateTime: string | null
-    ResponseDatime: string | null
+    RequestDateTime: string | null | undefined
+    ResponseDatime: string | null | undefined
   }
 
   export interface IResult {

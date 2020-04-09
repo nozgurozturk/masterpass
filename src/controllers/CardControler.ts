@@ -8,30 +8,85 @@ import MasterPassController from './MasterPassController'
 import { IDeleteCard } from '../requests/DeleteCard'
 import { RSA } from '../helpers/RSA'
 
+/**
+ * @class CardController
+ * @property {Function} onCardListChanged
+ * @property {Function} handleAddCard
+ * @property {Function} handleEditCard
+ * @property {Function} listCard
+ * @property {Function} registerCard
+ * @property {Function} deleteCard
+ */
+
 class CardController {
   private CardService : CardService
+
+  /**
+   * @param {CardService} CardService
+   */
+
   constructor (CardService: CardService) {
     this.CardService = CardService
     this.CardService.bindCardListChanged(this.onCardListChanged)
   }
 
-  onCardListChanged = (cards: Card[]) => {
+  /**
+   * Invokes when Card list is changed
+   * @method onCardListChanged
+   * @private
+   * @param {Array<Card>} cards
+   * @returns {void}
+   */
+
+  private onCardListChanged = (cards: Card[]):void => {
     setCards(cards)
   };
 
-  handleAddCard = (card: ICard) => {
+  /**
+   * Invokes when Card is added
+   * @method handleAddCard
+   * @private
+   * @param {ICard} card
+   * @returns {void}
+   */
+
+  private handleAddCard = (card: ICard):void => {
     this.CardService.add(card)
   };
 
-  handleEditCard = (id: string, card: ICard) => {
-    this.CardService.edit(id, card)
+  /**
+   * Invokes when Card is edited
+   * @method handleEditCard
+   * @private
+   * @param {ICard} card
+   * @param {string} name
+   * @returns {void}
+   */
+
+  private handleEditCard = (name: string, card: ICard):void => {
+    this.CardService.edit(name, card)
   };
 
-  handleDeleteCard = (id: string) => {
-    this.CardService.delete(id)
+  /**
+   * Invokes when Card is deleted
+   * @method handleDeleteCard
+   * @private
+   * @param {string} name
+   * @returns {void}
+   */
+
+  private handleDeleteCard = (name: string):void => {
+    this.CardService.delete(name)
   };
 
-  public ListCard = async () => {
+  /**
+   * Gets Listed Cards from Masterpass
+   * @method listCard
+   * @public
+   * @returns {Promise}
+   */
+
+  public listCard = async ():Promise<MasterPass.IResponse | MasterPass.IFault> => {
     const listCardInstance : IListCard = {
       token: Context.MasterPass.token,
       msisdn: Context.MasterPass.msisdn,
@@ -61,11 +116,19 @@ class CardController {
         }
       })
     } catch (error) {
-      return new Error(error.message)
+      return error.message
     }
   }
 
-  public registerCard = async (registerCardInstance:IRegisterCard) => {
+  /**
+   * Register Card to Masterpass
+   * @method registerCard
+   * @public
+   * @param {IRegisterCard} registerCardInstance
+   * @returns {Promise}
+   */
+
+  public registerCard = async (registerCardInstance:IRegisterCard):Promise<MasterPass.IResponse | MasterPass.IFault> => {
     const initialInstances: IRegisterCardDefault = {
       token: Context.MasterPass.token,
       email: null,
@@ -122,11 +185,19 @@ class CardController {
         }
       })
     } catch (error) {
-      return new Error(error.message)
+      return error.message
     }
   }
 
-  public deleteCard = async (accountAliasName: string) => {
+  /**
+   * Delete Card from Masterpass
+   * @method deleteCard
+   * @public
+   * @param {string} accountAliasName
+   * @returns {Promise}
+   */
+
+  public deleteCard = async (accountAliasName: string): Promise<MasterPass.IResponse | MasterPass.IFault> => {
     const deleteCardInstance: IDeleteCard = {
       token: Context.MasterPass.token,
       uiChannelType: '6',
@@ -167,7 +238,7 @@ class CardController {
         }
       })
     } catch (error) {
-      return new Error(error.message)
+      return error.message
     }
   }
 }
