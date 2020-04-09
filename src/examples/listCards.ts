@@ -17,7 +17,7 @@ function renderCards (cardList:Card[]) {
 }
 
 export function listCards () {
-  CardControler.ListCard()
+  CardControler.listCard()
     .then((response:MasterPass.IResponse) => {
       renderCards(response.Result.TransactionBody.ListItems.ListItem)
     })

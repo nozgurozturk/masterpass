@@ -7,7 +7,7 @@ import { MasterPass } from '../models/MasterPass'
 const linkButton = document.querySelector('.link-button')
 
 function linkCardToClient () {
-  AccountController.LinkCard()
+  AccountController.linkAccount()
     .then((response:MasterPass.IResponse) => {
       listCards()
     }).catch((fault:MasterPass.IFault) => {

@@ -10,10 +10,8 @@ import { MasterPass } from '../models/MasterPass'
 const linkButton = document.querySelector('.link-button')
 
 export function checkMasterPass () {
-  AccountController.CheckMasterPass()
+  AccountController.checkMasterPass()
     .then((response:MasterPass.IResponse) => {
-      console.log(Context.Account.accountStatus)
-      console.log(AccountStatus.LinkedWithCard)
       if (Context.Account.accountStatus === AccountStatus.NoAccount || Context.Account.accountStatus === AccountStatus.BlockedAccount) {
         throw new Error('Account not found or blocked')
       }
@@ -22,9 +20,10 @@ export function checkMasterPass () {
         return response.Result
       }
       if (Context.Account.accountStatus === AccountStatus.LinkedWithCard) {
-        console.log('treu')
         listCards()
       }
+
+      // TODO AccounsStatus.Updated
     }).catch((fault:MasterPass.IFault) => {
       showErrorMessage(fault.Detail.ServiceFaultDetail.ResponseDesc)
     })
