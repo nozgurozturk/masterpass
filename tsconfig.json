@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./lib/",
-    // "sourceMap": true,
+    "sourceMap": true,
     "noImplicitAny": true,
     "module": "es6",
     "target": "es5",
@@ -12,7 +12,7 @@
   },
   "exclude": ["public", "docs", "node_modules", "src/examples", "webpack.config.js"],
   "typedocOptions": {
-    "mode": "modules",
+    "mode": "file",
     "out": "docs",
     "exclude": ["lib", "public", "docs", "node_modules", "src/helpers/Encrypt.js", "src/examples"]
   }
