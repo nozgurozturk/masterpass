@@ -4,9 +4,9 @@ import { showErrorMessage } from './errorMessage'
 import { MasterPass } from '../models/MasterPass'
 
 function deleteCard (cardName:string) {
-  CardControler.deleteCard(cardName)
+  CardControler.delete(cardName)
     .then((response:MasterPass.IResponse) => {
-      listCards()
+      // listCards()
     })
     .catch((fault:MasterPass.IFault) => {
       showErrorMessage(fault.Detail.ServiceFaultDetail.ResponseDesc)

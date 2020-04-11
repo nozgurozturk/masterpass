@@ -1,10 +1,15 @@
-import { AccountService } from '../services/AccountService'
-import { Account, AccountStatus } from '../models/Account'
+// Context
 import { setAccount, Context } from '../contex/index'
+// Requests
 import { ICheckMasterPass } from '../requests/CheckMasterPass'
 import { ILinkCard } from '../requests/LinkCard'
-import MasterPassController from './MasterPassController'
+// Models
 import { MasterPass } from '../models/MasterPass'
+import { Account, AccountStatus, IAccount } from '../models/Account'
+// Services
+import { AccountService } from '../services/AccountService'
+// Controllers
+import MasterPassController from './MasterPassController'
 
 /**
  * @class AccountController
@@ -47,7 +52,7 @@ class AccountController {
    * @returns {void}
    */
 
-  private handleAddAccount = (account: Account):void => {
+  private handleAddAccount = (account: IAccount):void => {
     this.accountService.add(account)
   }
 
@@ -70,7 +75,7 @@ class AccountController {
    * @returns {Promise}
    */
 
-  public checkMasterPass = async () : Promise<MasterPass.IResponse | MasterPass.IFault> => {
+  public checkMasterpass = async () : Promise<MasterPass.IResponse | MasterPass.IFault> => {
     const checkMasterPassInstance: ICheckMasterPass = {
       sendSmsLanguage: 'tur',
       sendSms: 'Y',
@@ -93,10 +98,10 @@ class AccountController {
       return new Promise<MasterPass.IResponse | MasterPass.IFault>((resolve, reject) => {
         if (response.Data.Body.Fault.Detail.ServiceFaultDetail.ResponseCode === '0000' ||
             response.Data.Body.Fault.Detail.ServiceFaultDetail.ResponseCode === '') {
-          const newAccount: Account = new Account({
+          const newAccount: IAccount = {
             userId: Context.MasterPass.msisdn,
             accountStatus: this.handleStatus(response.Data.Body.Response.Result.TransactionBody.AccountStatus)
-          })
+          }
           this.handleAddAccount(newAccount)
           resolve(response.Data.Body.Response)
         } else {
@@ -119,8 +124,9 @@ class AccountController {
     const LinkCardInstance:ILinkCard = {
       sendSmsLanguage: 'tur',
       sendSms: 'Y',
+      referenceNo: '0000000',
       token: Context.MasterPass.token,
-      cardAliasName: '',
+      cardAliasName: 'a',
       msisdn: Context.MasterPass.msisdn,
       fp: '',
       clientId: Context.MasterPass.clientId,
@@ -129,7 +135,7 @@ class AccountController {
       clientType: '1'
     }
     try {
-      const linkCardResponse:any = await fetch(Context.baseUrl + '/linkCardToClient', {
+      const linkCardResponse:any = await fetch(`${Context.MasterPass.address}/linkCardToClient`, {
         method: 'POST',
         body: JSON.stringify(LinkCardInstance)
       })

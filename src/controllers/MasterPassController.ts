@@ -1,6 +1,9 @@
-import { MasterPassService } from '../services/MasterPassService'
-import { MasterPass } from '../models/MasterPass'
+// Context
 import { setMasterPassContext, setResponseTokenContext } from '../contex/index'
+// Models
+import { MasterPass } from '../models/MasterPass'
+// Services
+import { MasterPassService } from '../services/MasterPassService'
 
 /**
  * @class MasterPassController

@@ -1,5 +1,5 @@
-import { Account, IAccount, AccountStatus } from '../models/Account'
 import { Context } from '../contex/index'
+import { Account, IAccount, AccountStatus } from '../models/Account'
 
 /**
  * @class AccountService

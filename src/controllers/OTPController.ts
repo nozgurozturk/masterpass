@@ -1,6 +1,13 @@
-import { IOTP } from '../requests/OTP'
-import { MasterPass } from '../models/MasterPass'
+// Context
 import { Context } from '../contex/index'
+// Requests
+import { IOTP } from '../requests/OTP'
+// Models
+import { MasterPass } from '../models/MasterPass'
+// Controllers
+import MasterPassController from './MasterPassController'
+// Helpres
+import { RSA } from '../helpers/RSA'
 
 /**
  * @class OTPController
@@ -11,14 +18,17 @@ class OTPController {
   /**
    * Submit SMS validation code to Bank or MasterPass
    * @method submit
+   * @public
    * @param {string} validationCode
    * @returns {Promise}
    */
-  public static submit = async (validationCode: string):Promise<MasterPass.IResponse | MasterPass.IFault> => {
+  public static submit = async (validationCode: string, type?:string):Promise<MasterPass.IResponse | MasterPass.IFault> => {
+    if (type === 'mpin') validationCode = RSA.encrypt(validationCode)
+
     const OTPInstance: IOTP = {
       validationRefNo: Context.MasterPass.responseToken,
       token: null,
-      referenceNo: '000000',
+      referenceNo: '0000000',
       sendSmsLanguage: 'tur',
       sendSms: 'Y',
       validationCode: validationCode,
@@ -39,6 +49,7 @@ class OTPController {
         response.Data.Body.Fault.Detail.ServiceFaultDetail.ResponseCode === '') {
           resolve(response.Data.Body.Response)
         } else {
+          MasterPassController.onResponseTokenChanged(response.Data.Body.Fault.Detail.ServiceFaultDetail.Token)
           reject(response.Data.Body.Fault)
         }
       })

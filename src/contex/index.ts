@@ -1,11 +1,7 @@
 /* eslint-disable prefer-const */
 import { Account, AccountStatus } from '../models/Account'
 import { MasterPass } from '../models/MasterPass'
-import { Card } from '../models/Card'
-
 export namespace Context {
-  export const Env:string = 'prod'
-  export const baseUrl = Env === 'dev' ? 'https://test.masterpassturkiye.com/MasterpassJsonServerHandler/v2' : 'https://ui.masterpassturkiye.com/v2'
 
   export let Account: Account = {
     userId: '',
@@ -21,12 +17,6 @@ export namespace Context {
     token: '',
     responseToken: ''
   }
-
-  export let Cards: Card[] = []
-}
-
-export function setCards (cards: Card[]) {
-  Context.Cards = cards
 }
 
 export function setAccount (newAccount: Account) {

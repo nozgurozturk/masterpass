@@ -1,4 +1,5 @@
 import CardControler from '../controllers/CardControler'
+import { showErrorMessage } from './errorMessage'
 import { IRegisterCard } from '../requests/RegisterCard'
 import { showOTPForm } from './otpForm'
 import { listCards } from './listCards'
@@ -10,29 +11,30 @@ const fillCardInfoButton = document.querySelector('.fill')
 const showInputsButton = document.querySelector('.add-card')
 
 function registerCard (cardInstance:IRegisterCard) {
-  CardControler.registerCard(cardInstance).then((response:MasterPass.IResponse) => {
+  CardControler.register(cardInstance).then((response:MasterPass.IResponse) => {
     registerFormContainer.classList.add('hidden')
     listCards()
   })
     .catch((fault:MasterPass.IFault) => {
       if (fault.Detail.ServiceFaultDetail.ResponseCode === '5001' ||
-        fault.Detail.ServiceFaultDetail.ResponseCode === '5008') {
-        showOTPForm(listCards)
+      fault.Detail.ServiceFaultDetail.ResponseCode === '5008') {
+        showOTPForm()
       } else if (fault.Detail.ServiceFaultDetail.ResponseCode === '5010') {
-      // TODO : Show 3D Form
+        // TODO: SHOW 3D
+      } else if (fault.Detail.ServiceFaultDetail.ResponseCode === '5015') {
+        showOTPForm('mpin')
       } else {
-      // TODO : Show MPIN Form
-        showOTPForm(listCards)
+        showErrorMessage(fault.Detail.ServiceFaultDetail.ResponseDesc)
       }
     })
 }
 
 function fillCardInfos () {
-  (<HTMLInputElement>document.querySelector('#card-number')).value = '5170414821448657';
-  (<HTMLInputElement>document.querySelector('#expire-date')).value = '2809';
-  (<HTMLInputElement>document.querySelector('#card-cvc')).value = '744';
-  (<HTMLInputElement>document.querySelector('#holder-name')).value = 'Neset Ozgur Ozturk';
-  (<HTMLInputElement>document.querySelector('#card-name')).value = 'Garanti Test'
+  (<HTMLInputElement>document.querySelector('#card-number')).value = '4748544748544745';
+  (<HTMLInputElement>document.querySelector('#expire-date')).value = '2012';
+  (<HTMLInputElement>document.querySelector('#card-cvc')).value = '000';
+  (<HTMLInputElement>document.querySelector('#holder-name')).value = 'Obiwan Kenobi';
+  (<HTMLInputElement>document.querySelector('#card-name')).value = 'Akbank Test'
 }
 
 function onRegisterCard () {

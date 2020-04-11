@@ -105,3 +105,4 @@ dist
 
 # Npm Package
 lib
+src/examples

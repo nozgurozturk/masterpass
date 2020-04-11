@@ -12,8 +12,12 @@ function linkCardToClient () {
       listCards()
     }).catch((fault:MasterPass.IFault) => {
       if (fault.Detail.ServiceFaultDetail.ResponseCode === '5001' ||
-    fault.Detail.ServiceFaultDetail.ResponseCode === '5008') {
-        showOTPForm(listCards)
+      fault.Detail.ServiceFaultDetail.ResponseCode === '5008') {
+        showOTPForm()
+      } else if (fault.Detail.ServiceFaultDetail.ResponseCode === '5010') {
+        // TODO: SHOW 3D
+      } else if (fault.Detail.ServiceFaultDetail.ResponseCode === '5015') {
+        showOTPForm('mpin')
       } else {
         showErrorMessage(fault.Detail.ServiceFaultDetail.ResponseDesc)
       }

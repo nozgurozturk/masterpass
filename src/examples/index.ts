@@ -5,13 +5,13 @@ import './linkCardToClient'
 import './registerCard'
 import './listCards'
 import './deleteCard'
+import './purhcase'
 import { Context } from '../contex/index'
 
 initializeMasterPass().then(() => { checkMasterPass() }).catch((error) => showErrorMessage(error.message))
 
 document.querySelector('.log-button').addEventListener('click', () => {
   console.log(Context.Account)
-  console.log(Context.Cards)
   console.log(Context.MasterPass)
 })
 

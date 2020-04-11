@@ -10,7 +10,7 @@ import { MasterPass } from '../models/MasterPass'
 const linkButton = document.querySelector('.link-button')
 
 export function checkMasterPass () {
-  AccountController.checkMasterPass()
+  AccountController.checkMasterpass()
     .then((response:MasterPass.IResponse) => {
       if (Context.Account.accountStatus === AccountStatus.NoAccount || Context.Account.accountStatus === AccountStatus.BlockedAccount) {
         throw new Error('Account not found or blocked')

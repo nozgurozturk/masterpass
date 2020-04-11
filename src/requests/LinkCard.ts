@@ -2,6 +2,7 @@ export interface ILinkCard {
   sendSmsLanguage: string
   sendSms: string
   token: string
+  referenceNo: string
   cardAliasName: string | null
   msisdn: string
   fp: string

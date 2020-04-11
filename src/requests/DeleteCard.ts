@@ -3,7 +3,7 @@ export interface IDeleteCard {
   uiChannelType: string
   timeZone: string
   sendSmsLanguage: string
-  sendSms: string // 'ACCOUNT'
+  sendSms: string
   referenceNo: string
   msisdn: string
   mobileAccountConfig: string

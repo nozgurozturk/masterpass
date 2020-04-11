@@ -1,84 +1,24 @@
-import { CardService } from '../services/CardService'
-import { Card, ICard } from '../models/Card'
+// Context
+import { Context } from '../contex/index'
+// Requests
 import { IListCard } from '../requests/ListCard'
-import { Context, setCards } from '../contex/index'
-import { MasterPass } from '../models/MasterPass'
 import { IRegisterCard, IRegisterCardDefault } from '../requests/RegisterCard'
-import MasterPassController from './MasterPassController'
 import { IDeleteCard } from '../requests/DeleteCard'
+// Models
+import { MasterPass } from '../models/MasterPass'
+// Controllers
+import MasterPassController from './MasterPassController'
+// Helpers
 import { RSA } from '../helpers/RSA'
 
 /**
  * @class CardController
- * @property {Function} onCardListChanged
- * @property {Function} handleAddCard
- * @property {Function} handleEditCard
  * @property {Function} listCard
  * @property {Function} registerCard
  * @property {Function} deleteCard
  */
 
 class CardController {
-  private CardService : CardService
-
-  /**
-   * @param {CardService} CardService
-   */
-
-  constructor (CardService: CardService) {
-    this.CardService = CardService
-    this.CardService.bindCardListChanged(this.onCardListChanged)
-  }
-
-  /**
-   * Invokes when Card list is changed
-   * @method onCardListChanged
-   * @private
-   * @param {Array<Card>} cards
-   * @returns {void}
-   */
-
-  private onCardListChanged = (cards: Card[]):void => {
-    setCards(cards)
-  };
-
-  /**
-   * Invokes when Card is added
-   * @method handleAddCard
-   * @private
-   * @param {ICard} card
-   * @returns {void}
-   */
-
-  private handleAddCard = (card: ICard):void => {
-    this.CardService.add(card)
-  };
-
-  /**
-   * Invokes when Card is edited
-   * @method handleEditCard
-   * @private
-   * @param {ICard} card
-   * @param {string} name
-   * @returns {void}
-   */
-
-  private handleEditCard = (name: string, card: ICard):void => {
-    this.CardService.edit(name, card)
-  };
-
-  /**
-   * Invokes when Card is deleted
-   * @method handleDeleteCard
-   * @private
-   * @param {string} name
-   * @returns {void}
-   */
-
-  private handleDeleteCard = (name: string):void => {
-    this.CardService.delete(name)
-  };
-
   /**
    * Gets Listed Cards from Masterpass
    * @method listCard
@@ -86,7 +26,7 @@ class CardController {
    * @returns {Promise}
    */
 
-  public listCard = async ():Promise<MasterPass.IResponse | MasterPass.IFault> => {
+  public static list = async ():Promise<MasterPass.IResponse | MasterPass.IFault> => {
     const listCardInstance : IListCard = {
       token: Context.MasterPass.token,
       msisdn: Context.MasterPass.msisdn,
@@ -109,7 +49,6 @@ class CardController {
       return new Promise<MasterPass.IResponse | MasterPass.IFault>((resolve, reject) => {
         if (response.Data.Body.Fault.Detail.ServiceFaultDetail.ResponseCode === '0000' ||
         response.Data.Body.Fault.Detail.ServiceFaultDetail.ResponseCode === '') {
-          this.onCardListChanged(response.Data.Body.Response.Result.TransactionBody.ListItems.ListItem)
           resolve(response.Data.Body.Response)
         } else {
           reject(response.Data.Body.Fault)
@@ -128,7 +67,7 @@ class CardController {
    * @returns {Promise}
    */
 
-  public registerCard = async (registerCardInstance:IRegisterCard):Promise<MasterPass.IResponse | MasterPass.IFault> => {
+  public static register = async (registerCardInstance:IRegisterCard):Promise<MasterPass.IResponse | MasterPass.IFault> => {
     const initialInstances: IRegisterCardDefault = {
       token: Context.MasterPass.token,
       email: null,
@@ -143,7 +82,7 @@ class CardController {
       timeZone: '+01',
       sendSmsLanguage: 'tur',
       sendSms: 'Y',
-      referenceNo: '00000000',
+      referenceNo: '0000000',
       msisdn: Context.MasterPass.msisdn,
       mobileAccountConfig: 'MWA',
       identityVerificationFlag: 'Y',
@@ -172,12 +111,8 @@ class CardController {
       })
       const response : MasterPass.Response = await addCardResponse.json()
       return new Promise<MasterPass.IResponse | MasterPass.IFault>((resolve, reject) => {
-        console.log(response)
         if (response.Data.Body.Fault.Detail.ServiceFaultDetail.ResponseCode === '0000' ||
         response.Data.Body.Fault.Detail.ServiceFaultDetail.ResponseCode === '') {
-          response.Data.Body.Response.Result.TransactionBody.ListItems.ListItem.forEach(item => {
-            this.handleAddCard(item)
-          })
           resolve(response.Data.Body.Response)
         } else {
           MasterPassController.onResponseTokenChanged(response.Data.Body.Fault.Detail.ServiceFaultDetail.Token)
@@ -197,7 +132,7 @@ class CardController {
    * @returns {Promise}
    */
 
-  public deleteCard = async (accountAliasName: string): Promise<MasterPass.IResponse | MasterPass.IFault> => {
+  public static delete = async (accountAliasName: string): Promise<MasterPass.IResponse | MasterPass.IFault> => {
     const deleteCardInstance: IDeleteCard = {
       token: Context.MasterPass.token,
       uiChannelType: '6',
@@ -231,7 +166,6 @@ class CardController {
       return new Promise<MasterPass.IResponse | MasterPass.IFault>((resolve, reject) => {
         if (response.Data.Body.Fault.Detail.ServiceFaultDetail.ResponseCode === '0000' ||
         response.Data.Body.Fault.Detail.ServiceFaultDetail.ResponseCode === '') {
-          this.handleDeleteCard(accountAliasName)
           resolve(response.Data.Body.Response)
         } else {
           reject(response.Data.Body.Fault)
@@ -243,4 +177,4 @@ class CardController {
   }
 }
 
-export default new CardController(new CardService())
+export default CardController
