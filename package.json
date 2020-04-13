@@ -1,7 +1,8 @@
 {
   "name": "@nozgurozturk/masterpass",
-  "version": "1.0.9",
+  "version": "1.0.16",
   "description": "MasterPass Client Merchant Implementation",
+  "files": ["/lib"],
   "main": "/lib/index.js",
   "scripts": {
     "publish_package": "tsc && npm publish --access=public",

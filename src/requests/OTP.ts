@@ -1,16 +1,19 @@
-export interface IOTP {
+import { Initial } from './Initial'
+
+export interface IOTP extends Initial{
   validationCode: string
-  referenceNo: string
   sendSms: string
   sendSmsLanguage: string
-  clientId: string
   pinType?: string
   validationRefNo: string
   token: string | null
   fp: string | null
-  dateTime: Date | string
-  version: string
-  clientType: string
+}
+
+export interface IResend extends Initial {
+  validationRefNo: string
+  sendSmsLanguage: string
+  sendSms: string
 }
 
 // {"validationRefNo":"C4D164581061DFD174D5A5F4AA7A59870E100BE549EF9B795591313F94383B5D5EFD35083846F2B75A6696E7AEBDC754BE21C396D548682A7945B9480EA23B7AD9F917D32367F71BFC71D2CCA29D456A4974AE4228CDF08AECD6F52EC829904D",

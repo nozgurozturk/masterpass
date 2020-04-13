@@ -100,7 +100,7 @@ class AccountController {
             response.Data.Body.Fault.Detail.ServiceFaultDetail.ResponseCode === '') {
           const newAccount: IAccount = {
             userId: Context.MasterPass.msisdn,
-            accountStatus: this.handleStatus(response.Data.Body.Response.Result.TransactionBody.AccountStatus)
+            status: this.handleStatus(response.Data.Body.Response.Result.TransactionBody.AccountStatus)
           }
           this.handleAddAccount(newAccount)
           resolve(response.Data.Body.Response)
@@ -121,12 +121,12 @@ class AccountController {
    */
 
   public linkAccount = async ():Promise<MasterPass.IResponse | MasterPass.IFault> => {
-    const LinkCardInstance:ILinkCard = {
+    const linkCardInstance:ILinkCard = {
       sendSmsLanguage: 'tur',
       sendSms: 'Y',
       referenceNo: '0000000',
       token: Context.MasterPass.token,
-      cardAliasName: 'a',
+      cardAliasName: '',
       msisdn: Context.MasterPass.msisdn,
       fp: '',
       clientId: Context.MasterPass.clientId,
@@ -137,13 +137,13 @@ class AccountController {
     try {
       const linkCardResponse:any = await fetch(`${Context.MasterPass.address}/linkCardToClient`, {
         method: 'POST',
-        body: JSON.stringify(LinkCardInstance)
+        body: JSON.stringify(linkCardInstance)
       })
       const response: MasterPass.Response = await linkCardResponse.json()
       return new Promise<MasterPass.IResponse | MasterPass.IFault>((resolve, reject) => {
         if (response.Data.Body.Fault.Detail.ServiceFaultDetail.ResponseCode === '0000' ||
             response.Data.Body.Fault.Detail.ServiceFaultDetail.ResponseCode === '') {
-          this.handleStatus(response.Data.Body.Response.Result.TransactionBody.AccountStatus)
+          Context.Account.status = this.handleStatus(response.Data.Body.Response.Result.TransactionBody.AccountStatus)
           resolve(response.Data.Body.Response)
         } else {
           MasterPassController.onResponseTokenChanged(response.Data.Body.Fault.Detail.ServiceFaultDetail.Token)

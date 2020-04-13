@@ -7,7 +7,7 @@ import './listCards'
 import './deleteCard'
 import './purhcase'
 import { Context } from '../contex/index'
-
+import { creaditCardValidator } from '../helpers/creditCardValidator'
 initializeMasterPass().then(() => { checkMasterPass() }).catch((error) => showErrorMessage(error.message))
 
 document.querySelector('.log-button').addEventListener('click', () => {
@@ -31,4 +31,11 @@ const otpInput = document.querySelector('#otp-validation')
 otpCloseButton.addEventListener('click', () => {
   (<HTMLInputElement>otpInput).value = ''
   otpContainer.classList.add('hidden')
+})
+
+const cardList = ['4748544748544745', '4748544748544745', '5571135571135575', '4022774022774026', '5456165456165454', '4282209004348015', '4824894728063019']
+
+cardList.forEach(element => {
+  const result = creaditCardValidator(element)
+  console.log('result', result)
 })

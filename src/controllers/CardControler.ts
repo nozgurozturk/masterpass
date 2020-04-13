@@ -2,7 +2,7 @@
 import { Context } from '../contex/index'
 // Requests
 import { IListCard } from '../requests/ListCard'
-import { IRegisterCard, IRegisterCardDefault } from '../requests/RegisterCard'
+import { IRegisterCardInstances, IRegisterCard } from '../requests/RegisterCard'
 import { IDeleteCard } from '../requests/DeleteCard'
 // Models
 import { MasterPass } from '../models/MasterPass'
@@ -33,7 +33,7 @@ class CardController {
       referenceNo: '000000',
       listType: 'ACCOUNT',
       sendSms: 'Y',
-      clientIp: '',
+      clientIp: Context.MasterPass.clientIp,
       sendSmsLanguage: 'tur',
       clientId: Context.MasterPass.clientId,
       dateTime: new Date().toISOString(),
@@ -63,13 +63,18 @@ class CardController {
    * Register Card to Masterpass
    * @method registerCard
    * @public
-   * @param {IRegisterCard} registerCardInstance
+   * @param {IRegisterCardInstances} registerCardInstance
    * @returns {Promise}
    */
 
-  public static register = async (registerCardInstance:IRegisterCard):Promise<MasterPass.IResponse | MasterPass.IFault> => {
-    const initialInstances: IRegisterCardDefault = {
+  public static register = async ({ accountAliasName, cvc, cardHolderName, rtaPan, expiryDate }:IRegisterCardInstances):Promise<MasterPass.IResponse | MasterPass.IFault> => {
+    const registerCard: IRegisterCard = {
       token: Context.MasterPass.token,
+      cvc: RSA.encrypt(cvc),
+      rtaPan: RSA.encrypt(rtaPan),
+      expiryDate: expiryDate,
+      accountAliasName: accountAliasName,
+      cardHolderName: cardHolderName,
       email: null,
       lastName: null,
       firstName: null,
@@ -92,7 +97,7 @@ class CardController {
       cardTypeFlag: '05',
       eActionType: 'A',
       delinkReason: '',
-      clientIp: '',
+      clientIp: Context.MasterPass.clientIp,
       actionType: 'A',
       fp: '',
       clientId: Context.MasterPass.clientId,
@@ -100,14 +105,10 @@ class CardController {
       version: '35',
       clientType: '1'
     }
-    registerCardInstance = {
-      ...registerCardInstance, cvc: RSA.encrypt(registerCardInstance.cvc), rtaPan: RSA.encrypt(registerCardInstance.rtaPan)
-    }
-    const addCardInstance = { ...initialInstances, ...registerCardInstance }
     try {
       const addCardResponse : any = await fetch(`${Context.MasterPass.address}/register`, {
         method: 'POST',
-        body: JSON.stringify(addCardInstance)
+        body: JSON.stringify(registerCard)
       })
       const response : MasterPass.Response = await addCardResponse.json()
       return new Promise<MasterPass.IResponse | MasterPass.IFault>((resolve, reject) => {

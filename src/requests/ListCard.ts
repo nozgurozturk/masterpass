@@ -1,15 +1,12 @@
-export interface IListCard {
+import { Initial } from './Initial'
+
+export interface IListCard extends Initial{
   token: string
   msisdn: string
-  referenceNo: string
   listType: string // 'ACCOUNT'
   sendSms: string
   clientIp: string
   sendSmsLanguage: string
-  clientId: string
-  dateTime: string
-  version: string
-  clientType: string
 }
 
 // {"msisdn":"905385657551",

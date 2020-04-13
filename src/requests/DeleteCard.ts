@@ -1,10 +1,11 @@
-export interface IDeleteCard {
+import { Initial } from './Initial'
+
+export interface IDeleteCard extends Initial {
   token: string
   uiChannelType: string
   timeZone: string
   sendSmsLanguage: string
   sendSms: string
-  referenceNo: string
   msisdn: string
   mobileAccountConfig: string
   identityVerificationFlag: string
@@ -17,8 +18,4 @@ export interface IDeleteCard {
   clientIp: string
   actionType: string
   fp: string
-  clientId: string
-  dateTime: string
-  version: string
-  clientType: string
 }

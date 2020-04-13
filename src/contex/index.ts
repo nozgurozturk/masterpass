@@ -5,12 +5,13 @@ export namespace Context {
 
   export let Account: Account = {
     userId: '',
-    accountStatus: AccountStatus.NoAccount
+    status: AccountStatus.NoAccount
   }
 
   export let MasterPass: MasterPass._Model = {
     address: '',
     clientId: '',
+    clientIp: '',
     forceMasterPass3d: false,
     isOtpMsisdn: false,
     msisdn: '',

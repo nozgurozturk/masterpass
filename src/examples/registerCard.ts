@@ -1,6 +1,6 @@
 import CardControler from '../controllers/CardControler'
 import { showErrorMessage } from './errorMessage'
-import { IRegisterCard } from '../requests/RegisterCard'
+import { IRegisterCardInstances } from '../requests/RegisterCard'
 import { showOTPForm } from './otpForm'
 import { listCards } from './listCards'
 import { MasterPass } from '../models/MasterPass'
@@ -10,7 +10,7 @@ const registerFormContainer = document.querySelector('.register-form-container')
 const fillCardInfoButton = document.querySelector('.fill')
 const showInputsButton = document.querySelector('.add-card')
 
-function registerCard (cardInstance:IRegisterCard) {
+function registerCard (cardInstance:IRegisterCardInstances) {
   CardControler.register(cardInstance).then((response:MasterPass.IResponse) => {
     registerFormContainer.classList.add('hidden')
     listCards()

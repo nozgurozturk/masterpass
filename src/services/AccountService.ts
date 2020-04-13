@@ -49,13 +49,11 @@ export class AccountService {
    * @public
    * @method add
    * @param {IAccount} IAccount
-   * @param {string} IAccount.userId
-   * @param {number} accountStatus
    * @returns {void}
    */
 
-  public add ({ userId, accountStatus }: IAccount) {
-    const newAccount = new Account({ userId, accountStatus })
+  public add ({ userId, status }: IAccount): void {
+    const newAccount = new Account({ userId, status })
     this.commit(newAccount)
   }
 

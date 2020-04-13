@@ -1,4 +1,12 @@
-export interface IRegisterCardDefault {
+import { Initial } from './Initial'
+export interface IRegisterCardInstances {
+  rtaPan: string
+  expiryDate: string // YYMM
+  accountAliasName: string
+  cvc: string
+  cardHolderName: string
+}
+export interface IRegisterCard extends IRegisterCardInstances, Initial{
   token: string
   email: string | null
   lastName: string | null
@@ -12,7 +20,6 @@ export interface IRegisterCardDefault {
   timeZone: string // '+01'
   sendSmsLanguage: string | null
   sendSms: string | null
-  referenceNo: string | null
   msisdn: string
   clientIp: string | null // ''
   mobileAccountConfig: string // 'WMA'
@@ -25,15 +32,4 @@ export interface IRegisterCardDefault {
   delinkReason: string | null // ''
   actionType: string // 'A'
   fp: string | null
-  clientId: string
-  dateTime: Date | string
-  version: string // '35'
-  clientType: string // '1'
-}
-export interface IRegisterCard {
-  rtaPan: string
-  expiryDate: string // YYMM
-  accountAliasName: string
-  cvc: string
-  cardHolderName: string
 }

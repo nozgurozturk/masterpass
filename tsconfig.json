@@ -10,7 +10,12 @@
     "lib": ["es2017", "es7", "es6", "dom"],
     "esModuleInterop": true,
   },
-  "exclude": ["public", "docs", "node_modules", "src/examples", "webpack.config.js"],
+  "exclude": [
+    "public",
+    "docs",
+    "node_modules",
+    "src/examples",
+    "webpack.config.js"],
   "typedocOptions": {
     "mode": "file",
     "out": "docs",

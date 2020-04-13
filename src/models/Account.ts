@@ -10,14 +10,14 @@ export enum AccountStatus {
 
 export interface IAccount {
   userId?: string
-  accountStatus?: AccountStatus
+  status?: AccountStatus
 }
 
 export class Account {
   public userId: string
-  public accountStatus: AccountStatus
-  constructor ({ userId, accountStatus }:IAccount) {
+  public status: AccountStatus
+  constructor ({ userId, status }:IAccount) {
     this.userId = userId
-    this.accountStatus = accountStatus
+    this.status = status
   }
 }

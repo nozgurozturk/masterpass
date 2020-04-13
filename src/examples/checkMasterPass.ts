@@ -12,14 +12,14 @@ const linkButton = document.querySelector('.link-button')
 export function checkMasterPass () {
   AccountController.checkMasterpass()
     .then((response:MasterPass.IResponse) => {
-      if (Context.Account.accountStatus === AccountStatus.NoAccount || Context.Account.accountStatus === AccountStatus.BlockedAccount) {
+      if (Context.Account.status === AccountStatus.NoAccount || Context.Account.status === AccountStatus.BlockedAccount) {
         throw new Error('Account not found or blocked')
       }
-      if (Context.Account.accountStatus === AccountStatus.AccountWithCard) {
+      if (Context.Account.status === AccountStatus.AccountWithCard) {
         linkButton.classList.remove('hidden')
         return response.Result
       }
-      if (Context.Account.accountStatus === AccountStatus.LinkedWithCard) {
+      if (Context.Account.status === AccountStatus.LinkedWithCard) {
         listCards()
       }
 

@@ -25,11 +25,24 @@ export namespace MasterPass {
     ListItem?: ICard[]
   }
 
+  export interface ISmsNoti {
+      To?: string | null
+      Value?: string | null
+  }
+
   export interface ITransactionBody {
     url3D?: string | null | undefined
     ListItems?: IListItems
     AccountStatus?: string | null | undefined
     RefNo: string | null | undefined
+    CardUniqueId?: string
+    SmsNoti?: ISmsNoti
+    Token?: string
+    MaskedAccountNo?: string,
+    CurrencyCode?: string | null,
+    ApprovalCode?: string | null,
+    MaskedSenderRta?: string,
+    MerchantName?: string | null,
   }
 
   export interface ITransactionHeader {
@@ -64,6 +77,7 @@ export namespace MasterPass {
   export interface _Interface {
     address: string
     clientId: string
+    clientIp: string
     forceMasterPass3d: boolean
     isOtpMsisdn: boolean
     msisdn: string
@@ -71,9 +85,10 @@ export namespace MasterPass {
     responseToken?: string
   }
 
-  export class _Model {
+  export class _Model implements _Interface {
     public address: string
     public clientId: string
+    public clientIp: string
     public forceMasterPass3d: boolean
     public isOtpMsisdn: boolean
     public msisdn: string
@@ -82,6 +97,7 @@ export namespace MasterPass {
     constructor (
       {
         address,
+        clientIp,
         clientId,
         forceMasterPass3d,
         isOtpMsisdn,
@@ -91,6 +107,7 @@ export namespace MasterPass {
       }:_Interface) {
       this.address = address
       this.clientId = clientId
+      this.clientIp = clientIp
       this.forceMasterPass3d = forceMasterPass3d
       this.isOtpMsisdn = isOtpMsisdn
       this.msisdn = msisdn
