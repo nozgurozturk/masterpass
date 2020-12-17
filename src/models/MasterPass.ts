@@ -6,6 +6,9 @@ export namespace MasterPass {
     ResponseCode: string | null | undefined
     ResponseDesc: string | null | undefined
     Token: string | null | undefined
+    Url3D?: string
+    Url3DSuccess?: string
+    Url3DError?: string
     NewMsisdn: string | null | undefined
     InternalResponseCode: string | null | undefined
     InternalResponseMessage: string | null | undefined

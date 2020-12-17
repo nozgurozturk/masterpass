@@ -63,10 +63,9 @@ class OTPController {
 
   /**
    * Resend SMS validation code to Bank or MasterPass
-   * @method submit
+   * @method resend
    * @public
-   * @param {string} validationCode
-   * @returns {Promise}
+   * @returns {Promise<MasterPass.IResponse | MasterPass.IFault>}
    */
   public static resend = async ():Promise<MasterPass.IResponse | MasterPass.IFault> => {
     const OTPInstance: IResend = {

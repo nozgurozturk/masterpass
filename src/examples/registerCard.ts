@@ -30,10 +30,10 @@ function registerCard (cardInstance:IRegisterCardInstances) {
 }
 
 function fillCardInfos () {
-  (<HTMLInputElement>document.querySelector('#card-number')).value = '4748544748544745';
+  (<HTMLInputElement>document.querySelector('#card-number')).value = '4355084355084358';
   (<HTMLInputElement>document.querySelector('#expire-date')).value = '2012';
   (<HTMLInputElement>document.querySelector('#card-cvc')).value = '000';
-  (<HTMLInputElement>document.querySelector('#holder-name')).value = 'Obiwan Kenobi';
+  (<HTMLInputElement>document.querySelector('#holder-name')).value = 'Proje Test';
   (<HTMLInputElement>document.querySelector('#card-name')).value = 'Akbank Test'
 }
 

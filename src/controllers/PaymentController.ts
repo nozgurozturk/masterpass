@@ -8,6 +8,7 @@ import { MasterPass } from '../models/MasterPass'
 import MasterPassController from './MasterPassController'
 // Helpers
 import { RSA } from '../helpers/RSA'
+import { IPurchaseAndRegister, IPurchaseAndRegisterReq } from '../requests/PurchaseAndRegister'
 
 /**
  * @class Paymentcontroller
@@ -26,7 +27,7 @@ class PaymentController {
       paymentType: '',
       orderNo: purchaseRequset.orderNo,
       macroMerchantId: '',
-      cvc: RSA.encrypt(purchaseRequset.cvc),
+      cvc: purchaseRequset.cvc !== '' ? RSA.encrypt(purchaseRequset.cvc) : '',
       installmentCount: purchaseRequset.installmentCount,
       moneyCardInvoiceAmount: null,
       moneyCardMigrosDiscountAmount: null,
@@ -35,7 +36,7 @@ class PaymentController {
       moneyCardProductBasedDiscountAmount: null,
       rewardValue: '',
       rewardName: '',
-      token: Context.MasterPass.token,
+      token: purchaseRequset.token,
       userId: Context.MasterPass.msisdn,
       sendSmsMerchant: 'Y',
       sendSmsLanguage: 'tur',
@@ -60,6 +61,62 @@ class PaymentController {
       const otpResponse: any = await fetch(`${Context.MasterPass.address}/remotePurchaseOther`, {
         method: 'POST',
         body: JSON.stringify(purchaseInstances)
+      })
+      const response: MasterPass.Response = await otpResponse.json()
+      return new Promise<MasterPass.IResponse | MasterPass.IFault>((resolve, reject) => {
+        if (response.Data.Body.Fault.Detail.ServiceFaultDetail.ResponseCode === '0000' ||
+        response.Data.Body.Fault.Detail.ServiceFaultDetail.ResponseCode === '') {
+          resolve(response.Data.Body.Response)
+        } else {
+          MasterPassController.onResponseTokenChanged(response.Data.Body.Fault.Detail.ServiceFaultDetail.Token)
+          reject(response.Data.Body.Fault)
+        }
+      })
+    } catch (error) {
+      return error.message
+    }
+  }
+
+  public static purchaseAndRegister = async (purchaseAndRegister: IPurchaseAndRegister):Promise<MasterPass.IResponse | MasterPass.IFault> => {
+    const purhcaseAndRegisterReq : Omit<IPurchaseAndRegisterReq, 'listAccountName'> = {
+      accountAliasName: purchaseAndRegister.accountAliasName,
+      rtaPan: RSA.encrypt(purchaseAndRegister.rtaPan),
+      expiryDate: purchaseAndRegister.expiryDate,
+      cvc: RSA.encrypt(purchaseAndRegister.cvc),
+      cardHolderName: purchaseAndRegister.cardHolderName,
+      amount: purchaseAndRegister.amount,
+      orderNo: purchaseAndRegister.orderNo,
+      installmentCount: purchaseAndRegister.installmentCount,
+      rewardName: purchaseAndRegister.rewardName,
+      rewardValue: purchaseAndRegister.rewardValue,
+      token: purchaseAndRegister.token,
+      paymentType: null,
+      macroMerchantId: '',
+      moneyCardInvoiceAmount: null,
+      moneyCardMigrosDiscountAmount: null,
+      moneyCardPaymentAmount: null,
+      moneyCardExtraDiscountAmount: null,
+      moneyCardProductBasedDiscountAmount: null,
+      merchantId: null,
+      gender: null,
+      lastName: null,
+      firstName: null,
+      actionType: 'A',
+      fP: null,
+      sendSmsLanguage: 'tur',
+      sendSms: 'Y',
+      msisdn: Context.MasterPass.msisdn,
+      fp: '',
+      clientId: Context.MasterPass.clientId,
+      clientType: '1',
+      dateTime: new Date().toISOString(),
+      referenceNo: '101252836185',
+      version: '35'
+    }
+    try {
+      const otpResponse: any = await fetch(`${Context.MasterPass.address}/purchaseAndRegister`, {
+        method: 'POST',
+        body: JSON.stringify(purhcaseAndRegisterReq)
       })
       const response: MasterPass.Response = await otpResponse.json()
       return new Promise<MasterPass.IResponse | MasterPass.IFault>((resolve, reject) => {

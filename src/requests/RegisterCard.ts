@@ -1,4 +1,5 @@
 import { Initial } from './Initial'
+
 export interface IRegisterCardInstances {
   rtaPan: string
   expiryDate: string // YYMM
@@ -6,6 +7,7 @@ export interface IRegisterCardInstances {
   cvc: string
   cardHolderName: string
 }
+
 export interface IRegisterCard extends IRegisterCardInstances, Initial{
   token: string
   email: string | null

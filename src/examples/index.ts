@@ -6,6 +6,7 @@ import './registerCard'
 import './listCards'
 import './deleteCard'
 import './purhcase'
+import './purchaseAndRegister'
 import { Context } from '../contex/index'
 import { creaditCardValidator } from '../helpers/creditCardValidator'
 initializeMasterPass().then(() => { checkMasterPass() }).catch((error) => showErrorMessage(error.message))

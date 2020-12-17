@@ -13,9 +13,9 @@ function deleteCard (cardName:string) {
     })
 }
 
-document.body.addEventListener('click', (event) => {
-  if ((<Element>event.target).className === 'masterpass-card') {
-    const name = (<Element>event.target).getAttribute('data-alias')
-    deleteCard(name)
-  }
-})
+// document.body.addEventListener('click', (event) => {
+//   if ((<Element>event.target).className === 'masterpass-card') {
+//     const name = (<Element>event.target).getAttribute('data-alias')
+//     deleteCard(name)
+//   }
+// })

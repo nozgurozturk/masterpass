@@ -1,14 +1,20 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@nozgurozturk/masterpass": ["src/index.ts"],
+      "@nozgurozturk/masterpass/es/*": ["src/*"]
+    },
     "outDir": "./lib/",
-    // "sourceMap": true,
     "noImplicitAny": true,
-    "module": "es6",
-    "target": "es5",
-    "allowJs": true,
-    "declaration": true,
-    "lib": ["es2017", "es7", "es6", "dom"],
+    "moduleResolution": "node",
     "esModuleInterop": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "module": "ES6",
+    "allowJs": true,
+    "target": "es6",
+    "lib": ["es2017", "es6", "dom"],
   },
   "exclude": [
     "public",
